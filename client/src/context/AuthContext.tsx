@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Saker att göra:
+// - Uppdatera typesen i denna fil
+
 const AuthContext = React.createContext<any>(null);
 const { Provider } = AuthContext;
 
