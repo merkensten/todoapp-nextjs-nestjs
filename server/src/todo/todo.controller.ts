@@ -28,7 +28,7 @@ export class TodoController {
 
   @UseGuards(JwtGuard)
   @Get(':id')
-  findTodos(@Param('id') id: string): Promise<TodoDocument[]> {
+  findAllTodos(@Param('id') id: string): Promise<TodoDocument[]> {
     return this.todoService.findAllTodos(id);
   }
 
