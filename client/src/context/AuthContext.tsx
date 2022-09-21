@@ -1,38 +1,53 @@
-// import React from 'react';
-// import { useRouter } from 'next/router';
+import React from 'react';
 
-// const AuthContext = React.createContext();
-// const { Provider } = AuthContext;
+const AuthContext = React.createContext<any>(null);
+const { Provider } = AuthContext;
 
-// const AuthProvider = ({ children }) => {
-//   const [authState, setAuthState] = React.useState({
-//     token: '',
-//   });
+const TOKEN: 'token' = 'token';
 
-//   const setUserAuthInfo = ({ data }) => {
-//     const token = localStorage.setItem('token', data.data);
+const AuthProvider = ({ children }: any) => {
+  const [authState, setAuthState] = React.useState({
+    token: '',
+  });
 
-//     setAuthState({
-//       token,
-//     });
-//   };
+  function setUserAuth(token: string) {
+    localStorage.setItem(TOKEN, token);
 
-//   // checks if the user is authenticated or not
-//   const isUserAuthenticated = () => !!authState.token
+    setAuthState({
+      token,
+    });
+  }
 
-//   return (
-//     <Provider
-//       value={{
-//         authState,
-//         setAuthState: (userAuthInfo) => setUserAuthInfo(userAuthInfo),
-//         isUserAuthenticated,
-//       }}
-//     >
-//       {children}
-//     </Provider>
-//   );
-// };
+  // checks if the user is authenticated or not
+  function isUserAuthenticated() {
+    const token = localStorage.getItem(TOKEN);
 
-// export { AuthContext, AuthProvider };
+    if (token) {
+      return true;
+    }
 
-export {};
+    return false;
+  }
+
+  function logoutUser() {
+    localStorage.removeItem(TOKEN);
+    setAuthState({
+      token: '',
+    });
+  }
+
+  return (
+    <Provider
+      value={{
+        authState,
+        setUserAuth,
+        isUserAuthenticated,
+        logoutUser,
+      }}
+    >
+      {children}
+    </Provider>
+  );
+};
+
+export { AuthContext, AuthProvider };
