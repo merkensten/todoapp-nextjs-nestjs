@@ -1,28 +1,16 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/AuthContext';
-import jwt_decode from 'jwt-decode';
 
 // components
-import GetTodo from '../../components/todos/GetTodo';
+import DisplayTodos from '../../components/todos/DisplayTodos';
 
 // Utils
 import { getTokenInfo } from '../../utils';
 
-// type DecodedTokenType = {
-//   exp: number;
-//   iat: number;
-//   user: {
-//     id: string;
-//     username: string;
-//     userLevel: number;
-//   };
-// };s
-
 function App() {
   const router = useRouter();
-  const { isUserAuthenticated, getToken, logoutUser } =
-    React.useContext(AuthContext);
+  const { isUserAuthenticated, getToken } = React.useContext(AuthContext);
 
   const [userId, setUserId] = React.useState('');
   const [userToken, setUserToken] = React.useState('');
@@ -43,15 +31,10 @@ function App() {
     }
   }, [router, getToken, isUserAuthenticated]);
 
-  function logout() {
-    logoutUser();
-    router.push('/login');
-  }
-
   return (
     <div>
       <h1>Homepage för appen</h1>
-      <GetTodo userId={userId} token={userToken} />
+      <DisplayTodos userId={userId} token={userToken} />
     </div>
   );
 }
