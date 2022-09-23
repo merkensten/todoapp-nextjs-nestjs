@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/AuthContext';
 
 // components
-import DisplayTodos from '../../components/todos/DisplayTodos';
+import Todos from '../../components/todos/Todos';
 
 // Utils
 import { getTokenInfo } from '../../utils';
@@ -34,7 +34,7 @@ function App() {
   return (
     <div>
       <h1>Homepage för appen</h1>
-      <DisplayTodos userId={userId} token={userToken} />
+      <Todos userId={userId} token={userToken} />
     </div>
   );
 }
