@@ -18,8 +18,13 @@ type Props = {
 function Todos({ userId, token }: Props) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
   const [todos, setTodos] = React.useState<TodoType[]>([]);
+  const [rerender, setRerender] = React.useState<boolean>(false);
   // const [isLoading, setIsLoading] = React.useState(false);
   // const [error, setError] = React.useState(false);
+
+  function rerenderTodos() {
+    setRerender((prevState: boolean) => !prevState);
+  }
 
   React.useEffect(() => {
     function getTodos() {
@@ -43,7 +48,7 @@ function Todos({ userId, token }: Props) {
     }
 
     getTodos();
-  }, [token, userId, API_URL]);
+  }, [token, userId, API_URL, rerender]);
 
   return (
     <>
@@ -53,7 +58,11 @@ function Todos({ userId, token }: Props) {
         API_URL={API_URL}
         setTodos={setTodos}
       />
-      <DisplayTodos todos={todos} />
+      <DisplayTodos
+        todos={todos}
+        token={token}
+        rerenderTodos={rerenderTodos}
+      />
     </>
   );
 }

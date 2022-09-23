@@ -11,14 +11,24 @@ type TodoType = {
 
 type Props = {
   todos: TodoType[];
+  token: string;
+  rerenderTodos: () => void;
 };
 
-function DisplayTodos({ todos }: Props) {
+function DisplayTodos({ todos, token, rerenderTodos }: Props) {
+  const [completedTodos, setCompletedTodos] = React.useState<TodoType[]>([]);
+
+  console.log(completedTodos);
+
+  React.useEffect(() => {
+    const completedTodos = todos.filter((todo) => todo.completed === true);
+    setCompletedTodos(completedTodos);
+  }, [todos]);
   return (
     <div>
       <>
-        <h1>Todos</h1>
         <div>
+          <h1>Todos</h1>
           {todos.map((todo, index) => {
             if (!todo.completed) {
               return (
@@ -28,9 +38,27 @@ function DisplayTodos({ todos }: Props) {
                   completed={todo.completed}
                   _id={todo._id}
                   user={todo.user}
+                  token={token}
+                  rerenderTodos={rerenderTodos}
                 />
               );
             }
+          })}
+        </div>
+        <div>
+          <h1>Slutförda Todos</h1>
+          {completedTodos.map((todo, index) => {
+            return (
+              <TodoItem
+                key={index}
+                text={todo.text}
+                completed={todo.completed}
+                _id={todo._id}
+                user={todo.user}
+                token={token}
+                rerenderTodos={rerenderTodos}
+              />
+            );
           })}
         </div>
       </>
