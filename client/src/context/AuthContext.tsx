@@ -3,35 +3,21 @@ import React from 'react';
 // Saker att göra:
 // - Uppdatera typesen i denna fil
 
+type AuthProiverType = {
+  children: React.ReactNode;
+};
+
 const AuthContext = React.createContext<any>(null);
 const { Provider } = AuthContext;
 
 const TOKEN: 'token' = 'token';
 
-const AuthProvider = ({ children }: any) => {
-  const [authState, setAuthState] = React.useState({
-    token: '',
-  });
+const AuthProvider = ({ children }: AuthProiverType) => {
+  const [isUserAuthenticated, setIsUserAuthenticated] =
+    React.useState<boolean>();
 
-  function setUserAuth(token: string) {
+  function setToken(token: string) {
     localStorage.setItem(TOKEN, token);
-
-    setAuthState({
-      token,
-    });
-  }
-
-  // checks if the user is authenticated or not
-  function isUserAuthenticated() {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem(TOKEN);
-
-      if (token) {
-        return true;
-      }
-
-      return false;
-    }
   }
 
   function getToken() {
@@ -42,25 +28,35 @@ const AuthProvider = ({ children }: any) => {
         return token;
       }
 
-      return '';
+      return null;
     }
   }
 
+  React.useEffect(() => {
+    const token = getToken();
+
+    if (token === null) {
+      setIsUserAuthenticated(false);
+    }
+
+    if (token) {
+      setIsUserAuthenticated(true);
+    }
+  }, []);
+
   function logoutUser() {
     localStorage.removeItem(TOKEN);
-    setAuthState({
-      token: '',
-    });
+    setIsUserAuthenticated(false);
   }
 
   return (
     <Provider
       value={{
-        authState,
-        setUserAuth,
+        setIsUserAuthenticated,
         isUserAuthenticated,
         logoutUser,
         getToken,
+        setToken,
       }}
     >
       {children}

@@ -13,7 +13,7 @@ function Header() {
   return (
     <div>
       <h1>Header</h1>
-      {isUserAuthenticated() && (
+      {isUserAuthenticated && (
         <button onClick={logoutUserFunc}>Logga ut</button>
       )}
     </div>

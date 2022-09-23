@@ -17,41 +17,40 @@ import { getTokenInfo } from '../../utils';
 //     username: string;
 //     userLevel: number;
 //   };
-// };
+// };s
 
 function App() {
-  const TOKEN: 'token' = 'token';
   const router = useRouter();
-  const authContext = React.useContext(AuthContext);
+  const { isUserAuthenticated, getToken, logoutUser } =
+    React.useContext(AuthContext);
 
   const [userId, setUserId] = React.useState('');
   const [userToken, setUserToken] = React.useState('');
 
   React.useEffect(() => {
     // checks if the user is authenticated
-    if (!authContext.isUserAuthenticated()) {
+    if (isUserAuthenticated === false) {
       router.push('/login');
     }
 
     // Denna if sats körs bara när det finns en autensierad användare
-    if (authContext.isUserAuthenticated()) {
-      const token = authContext.getToken();
+    if (isUserAuthenticated) {
+      const token = getToken();
       const decodedToken = getTokenInfo(token);
 
       setUserId(decodedToken.user.id);
       setUserToken(token);
     }
-  }, [authContext, router]);
+  }, [router, getToken, isUserAuthenticated]);
 
-  function logoutUser() {
-    authContext.logoutUser();
+  function logout() {
+    logoutUser();
     router.push('/login');
   }
 
   return (
     <div>
       <h1>Homepage för appen</h1>
-      <button onClick={logoutUser}>Logga ut</button>
       <GetTodo userId={userId} token={userToken} />
     </div>
   );

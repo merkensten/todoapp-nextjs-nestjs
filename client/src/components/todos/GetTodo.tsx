@@ -1,5 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+
+// hooks
+import { GetTodos } from '../../hooks';
 
 type Props = {
   userId: string;
@@ -20,27 +30,32 @@ function GetTodo({ userId, token }: Props) {
 
   console.log(token);
 
-  React.useEffect(() => {
-    if (token) {
-      axios
-        .get(`${API_URL}/todo/${userId}`, {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        })
-        .then(function (response) {
-          setTodos(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  }, [userId, token, API_URL]);
-  console.log(todos);
+  // const { isLoading, error, data } = useQuery('userData', () =>
+  //   fetch(`${API_URL}/user`).then((res) => res.json())
+  // );
+
+  // console.log(data);
+
+  // React.useEffect(() => {
+  //   if (token) {
+  //     axios
+  //       .get(`${API_URL}/todo/${userId}`, {
+  //         headers: {
+  //           Authorization: 'Bearer ' + token,
+  //         },
+  //       })
+  //       .then(function (response) {
+  //         setTodos(response.data);
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [userId, token, API_URL]);
   return (
     <div>
       <h1>Todos</h1>
-      <div>
+      {/* <div>
         {todos.map((todo) => {
           if (!todo.completed) {
             return (
@@ -50,7 +65,7 @@ function GetTodo({ userId, token }: Props) {
             );
           }
         })}
-      </div>
+      </div> */}
     </div>
   );
 }

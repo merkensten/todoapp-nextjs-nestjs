@@ -7,7 +7,7 @@ import styles from '../styles/pages/Login.module.scss';
 
 function Login() {
   const router = useRouter();
-  const { setUserAuth } = React.useContext(AuthContext);
+  const { setIsUserAuthenticated, setToken } = React.useContext(AuthContext);
 
   // lokalt state
   const [username, setUsername] = React.useState('');
@@ -46,7 +46,8 @@ function Login() {
         .then(function (response) {
           console.log(response.data);
           setFormSucess(true);
-          setUserAuth(response.data.token);
+          setToken(response.data.token);
+          setIsUserAuthenticated(true);
         })
         .catch(function (error) {
           console.log(error);
