@@ -46,7 +46,6 @@ function Login() {
         .then(function (response) {
           console.log(response.data);
           setFormSucess(true);
-          clearFormFields();
           setUserAuth(response.data.token);
         })
         .catch(function (error) {
@@ -56,6 +55,7 @@ function Login() {
         });
 
       setTimeout(() => {
+        clearFormFields();
         router.push('/app');
       }, 2000);
     }

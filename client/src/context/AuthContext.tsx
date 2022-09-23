@@ -23,13 +23,27 @@ const AuthProvider = ({ children }: any) => {
 
   // checks if the user is authenticated or not
   function isUserAuthenticated() {
-    const token = localStorage.getItem(TOKEN);
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem(TOKEN);
 
-    if (token) {
-      return true;
+      if (token) {
+        return true;
+      }
+
+      return false;
     }
+  }
 
-    return false;
+  function getToken() {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem(TOKEN);
+
+      if (token) {
+        return token;
+      }
+
+      return '';
+    }
   }
 
   function logoutUser() {
@@ -46,6 +60,7 @@ const AuthProvider = ({ children }: any) => {
         setUserAuth,
         isUserAuthenticated,
         logoutUser,
+        getToken,
       }}
     >
       {children}
