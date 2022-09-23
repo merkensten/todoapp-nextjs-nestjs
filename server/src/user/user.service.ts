@@ -29,6 +29,28 @@ export class UserService {
     return this._getUserDetails(user);
   }
 
+  async updatePassword(
+    id: string,
+    password: string,
+  ): Promise<UserDetails | null> {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      return null;
+    }
+    user.password = password;
+    await user.save();
+    return this._getUserDetails(user);
+  }
+
+  async updateUsername(id: string, newUsername: string): Promise<UserDocument> {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      return null;
+    }
+    user.username = newUsername;
+    return user.save();
+  }
+
   async create(
     username: string,
     hashedPassword: string,
