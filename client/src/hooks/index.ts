@@ -1,3 +1,4 @@
-import { GetTodos } from "./UseFetch";
+import { GetTodos } from './useFetch';
+import useLockScroll from './useLockScroll';
 
-export { GetTodos };
+export { GetTodos, useLockScroll };

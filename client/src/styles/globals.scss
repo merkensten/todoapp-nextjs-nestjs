@@ -15,5 +15,29 @@ body {
 
 form {
   input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    outline: none;
   }
+
+  button {
+    margin-left: 1rem;
+  }
+}
+
+
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 1.2rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  outline: none;
+}
+
+button + button {
+  margin-left: 1rem;
 }

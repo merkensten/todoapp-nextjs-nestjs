@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './TodoItem.module.scss';
 import axios from 'axios';
 
+// components
+import UpdateTodo from '../update-todo/UpdateTodo';
+
 type TodoType = {
   _id: string;
   text: string;
@@ -18,7 +21,7 @@ function TodoItem({
   token,
   rerenderTodos,
 }: TodoType) {
-  //   console.log(_id, user);
+  const [showUpdateTodo, setShowUpdateTodo] = React.useState(false);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -60,15 +63,60 @@ function TodoItem({
       });
   }
 
+  function updateTodo() {
+    setShowUpdateTodo(!showUpdateTodo);
+  }
+
+  function resetTodoToActive() {
+    axios({
+      method: 'put',
+      url: `${API_URL}/todo/${_id}?user=${user}`,
+      data: {
+        text: text,
+        user: user,
+        completed: false,
+      },
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+      .then(function (response) {
+        rerenderTodos();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
-    <div className={styles.wrapper}>
-      <h2>{text}</h2>
-      <p>{completed.toString()}</p>
-      <p>{_id}</p>
-      <p>{user}</p>
-      {completed === false && <button onClick={completeTodo}>Complete</button>}
-      <button onClick={removeTodoFromServer}>Delete</button>
-    </div>
+    <>
+      <div className={styles.wrapper}>
+        {showUpdateTodo && (
+          <>
+            <UpdateTodo
+              _id={_id}
+              user={user}
+              completed={completed}
+              token={token}
+              rerenderTodos={rerenderTodos}
+              setShowUpdateTodo={setShowUpdateTodo}
+            />
+          </>
+        )}
+        <h2>{text}</h2>
+        <p>{completed.toString()}</p>
+        <p>{_id}</p>
+        <p>{user}</p>
+        {!completed && (
+          <>
+            <button onClick={completeTodo}>Färdigställ</button>
+            <button onClick={updateTodo}>Ändra</button>
+          </>
+        )}
+        {completed && <button onClick={resetTodoToActive}>Återställ</button>}
+        <button onClick={removeTodoFromServer}>Radera</button>
+      </div>
+    </>
   );
 }
 
