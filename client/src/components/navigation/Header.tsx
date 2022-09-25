@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Header.module.scss';
+import styles from '../../styles/components/navigation/Header.module.scss';
 import { useRouter } from 'next/router';
-import { AuthContext } from '../../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 function Header() {
   const { logoutUser, isUserAuthenticated } = React.useContext(AuthContext);

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/AuthContext';
 
 // components
-import Todos from '../../components/todos/Todos';
+import { Todos } from '../../components/todos';
 
 // Utils
 import { getTokenInfo } from '../../utils';

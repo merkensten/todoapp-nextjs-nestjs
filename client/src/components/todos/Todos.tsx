@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateTodo from './create-todo/CreateTodo';
+import CreateTodo from './CreateTodo';
 import DisplayTodos from './DisplayTodos';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';

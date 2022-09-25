@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './TodoItem.module.scss';
+import styles from '../../styles/components/todos/Todos.module.scss';
 import axios from 'axios';
 
 // components
-import UpdateTodo from '../update-todo/UpdateTodo';
+import UpdateTodo from './UpdateTodo';
 
 type TodoType = {
   _id: string;
@@ -90,7 +90,7 @@ function TodoItem({
 
   return (
     <>
-      <div className={styles.wrapper}>
+      <div className={styles.todo_item_wrapper}>
         {showUpdateTodo && (
           <>
             <UpdateTodo

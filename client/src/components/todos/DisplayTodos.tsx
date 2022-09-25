@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TodoItem from './todo-item/TodoItem';
+import TodoItem from './TodoItem';
 
 type TodoType = {
   _id: string;
@@ -18,8 +18,6 @@ type Props = {
 function DisplayTodos({ todos, token, rerenderTodos }: Props) {
   const [completedTodos, setCompletedTodos] = React.useState<TodoType[]>([]);
 
-  console.log(completedTodos);
-
   React.useEffect(() => {
     const completedTodos = todos.filter((todo) => todo.completed === true);
     setCompletedTodos(completedTodos);
@@ -29,8 +27,28 @@ function DisplayTodos({ todos, token, rerenderTodos }: Props) {
       <>
         <div>
           <h1>Todos</h1>
-          {todos.map((todo, index) => {
-            if (!todo.completed) {
+          {todos
+            .map((todo, index) => {
+              if (!todo.completed) {
+                return (
+                  <TodoItem
+                    key={index}
+                    text={todo.text}
+                    completed={todo.completed}
+                    _id={todo._id}
+                    user={todo.user}
+                    token={token}
+                    rerenderTodos={rerenderTodos}
+                  />
+                );
+              }
+            })
+            .reverse()}
+        </div>
+        <div>
+          <h1>Slutförda Todos</h1>
+          {completedTodos
+            .map((todo, index) => {
               return (
                 <TodoItem
                   key={index}
@@ -42,24 +60,8 @@ function DisplayTodos({ todos, token, rerenderTodos }: Props) {
                   rerenderTodos={rerenderTodos}
                 />
               );
-            }
-          })}
-        </div>
-        <div>
-          <h1>Slutförda Todos</h1>
-          {completedTodos.map((todo, index) => {
-            return (
-              <TodoItem
-                key={index}
-                text={todo.text}
-                completed={todo.completed}
-                _id={todo._id}
-                user={todo.user}
-                token={token}
-                rerenderTodos={rerenderTodos}
-              />
-            );
-          })}
+            })
+            .reverse()}
         </div>
       </>
     </div>

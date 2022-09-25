@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import styles from './Footer.module.scss';
+import styles from '../../styles/components/navigation/Footer.module.scss';
 
 function Footer() {
   return (
