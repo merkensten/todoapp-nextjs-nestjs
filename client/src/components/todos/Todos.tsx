@@ -2,6 +2,7 @@ import React from 'react';
 import CreateTodo from './create-todo/CreateTodo';
 import DisplayTodos from './DisplayTodos';
 import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 
 type TodoType = {
   _id: string;
@@ -19,6 +20,7 @@ function Todos({ userId, token }: Props) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
   const [todos, setTodos] = React.useState<TodoType[]>([]);
   const [rerender, setRerender] = React.useState<boolean>(false);
+  const { logoutUser } = React.useContext(AuthContext);
   // const [isLoading, setIsLoading] = React.useState(false);
   // const [error, setError] = React.useState(false);
 
@@ -39,7 +41,11 @@ function Todos({ userId, token }: Props) {
             setTodos(response.data);
           })
           .catch(function (error) {
-            console.log(error);
+            const status = error.response.status;
+
+            if (status === 401) {
+              logoutUser();
+            }
           })
           .then(function () {
             // always executed
@@ -48,7 +54,7 @@ function Todos({ userId, token }: Props) {
     }
 
     getTodos();
-  }, [token, userId, API_URL, rerender]);
+  }, [token, userId, API_URL, rerender, logoutUser]);
 
   return (
     <>
@@ -58,11 +64,7 @@ function Todos({ userId, token }: Props) {
         API_URL={API_URL}
         setTodos={setTodos}
       />
-      <DisplayTodos
-        todos={todos}
-        token={token}
-        rerenderTodos={rerenderTodos}
-      />
+      <DisplayTodos todos={todos} token={token} rerenderTodos={rerenderTodos} />
     </>
   );
 }
