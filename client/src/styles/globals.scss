@@ -10,6 +10,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
+  background-color: $color-secondary;
 }
 
 // Skriva global styling för form
@@ -28,7 +29,6 @@ form {
     margin-left: 1rem;
   }
 }
-
 
 button {
   border: none;
