@@ -46,12 +46,8 @@ function AppHeader() {
 }
 
 function Header() {
-  const { logoutUser, isUserAuthenticated } = React.useContext(AuthContext);
-  // const router = useRouter();
-  // function logoutUserFunc() {
-  //   logoutUser();
-  //   router.push('/login');
-  // }
+  const { isUserAuthenticated } = React.useContext(AuthContext);
+
   return (
     <>
       {isUserAuthenticated && <AppHeader />}
