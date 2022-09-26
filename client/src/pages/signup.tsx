@@ -59,35 +59,37 @@ function Signup() {
     }, 2000);
   }
   return (
-    <div>
+    <div className={styles.signup_wrapper}>
       <form onSubmit={formSubmit}>
         <label>
-          Username:
+          Användarnamn:
           <input
             type="text"
-            name="username"
-            id="username"
-            placeholder="username..."
+            name="användarnamn"
+            id="användarnamn"
+            placeholder="användarnamn..."
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
         </label>
         <label>
-          Password:
+          Lösenord:
           <input
             type="password"
-            name="password"
-            id="password"
-            placeholder="password..."
+            name="lösenord"
+            id="lösenord"
+            placeholder="lösenord..."
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <button type="submit">Sign up</button>
+        <button type="submit" className="btn-primary form-btn">
+          Sign up
+        </button>
 
         {formError && (
           <div>
-            <p>{formErrorMessage}</p>
+            <p className="error">{formErrorMessage}</p>
           </div>
         )}
         {formSucess && (

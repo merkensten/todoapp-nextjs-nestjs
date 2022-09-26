@@ -70,34 +70,37 @@ function Login() {
     }
   }
   return (
-    <div>
+    <div className={styles.login_wrapper}>
       <form onSubmit={formSubmit}>
+        <h1>Logga in</h1>
         <label>
-          Username:
+          Användarnamn
           <input
             type="text"
-            name="username"
-            id="username"
-            placeholder="username..."
+            name="användarnamn"
+            id="användarnamn"
+            placeholder="användarnamn..."
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
         </label>
         <label>
-          Password:
+          Lösenord
           <input
             type="password"
-            name="password"
-            id="password"
-            placeholder="password..."
+            name="lösenord"
+            id="lösenord"
+            placeholder="lösenord..."
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <button type="submit">Logga in</button>
+        <button className="btn-primary form-btn" type="submit">
+          Logga in
+        </button>
         {formError && (
           <div>
-            <p>{formErrorMessage}</p>
+            <p className="error">{formErrorMessage}</p>
           </div>
         )}
         {formSucess && (
