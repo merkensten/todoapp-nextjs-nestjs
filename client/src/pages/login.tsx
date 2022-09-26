@@ -7,7 +7,15 @@ import styles from '../styles/pages/Login.module.scss';
 
 function Login() {
   const router = useRouter();
-  const { setIsUserAuthenticated, setToken } = React.useContext(AuthContext);
+  const { setIsUserAuthenticated, setToken, isUserAuthenticated } =
+    React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    // checks if the user is authenticated
+    if (isUserAuthenticated === true) {
+      router.push('/app');
+    }
+  }, [router, isUserAuthenticated]);
 
   // lokalt state
   const [username, setUsername] = React.useState('');

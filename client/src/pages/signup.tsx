@@ -1,11 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { AuthContext } from '../context/AuthContext';
 
 import styles from '../styles/pages/Signup.module.scss';
 
 function Signup() {
   const router = useRouter();
+  const { isUserAuthenticated } = React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    // checks if the user is authenticated
+    if (isUserAuthenticated === true) {
+      router.push('/app');
+    }
+  }, [router, isUserAuthenticated]);
 
   // Lokalt state
   const [username, setUsername] = React.useState('');

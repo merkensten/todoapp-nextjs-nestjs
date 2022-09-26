@@ -1,9 +1,22 @@
 import type { NextPage } from 'next';
+import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/pages/Home.module.scss';
+import { useRouter } from 'next/router';
+import { AuthContext } from '../context/AuthContext';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const { isUserAuthenticated } = React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    // checks if the user is authenticated
+    if (isUserAuthenticated === true) {
+      router.push('/app');
+    }
+  }, [router, isUserAuthenticated]);
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -15,8 +28,6 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h1 className={styles.title}>NextJS todo app</h1>
       </main>
-
-      
     </div>
   );
 };
