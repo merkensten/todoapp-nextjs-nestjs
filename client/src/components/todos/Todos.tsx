@@ -3,6 +3,7 @@ import CreateTodo from './CreateTodo';
 import DisplayTodos from './DisplayTodos';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
+import styles from '../../styles/components/todos/Todos.module.scss';
 
 type TodoType = {
   _id: string;
@@ -57,7 +58,7 @@ function Todos({ userId, token }: Props) {
   }, [token, userId, API_URL, rerender, logoutUser]);
 
   return (
-    <>
+    <div className={styles.todo_wrapper}>
       <CreateTodo
         userId={userId}
         token={token}
@@ -65,7 +66,7 @@ function Todos({ userId, token }: Props) {
         setTodos={setTodos}
       />
       <DisplayTodos todos={todos} token={token} rerenderTodos={rerenderTodos} />
-    </>
+    </div>
   );
 }
 

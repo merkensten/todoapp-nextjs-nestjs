@@ -1,6 +1,10 @@
 import React from 'react';
 import styles from '../../styles/components/todos/Todos.module.scss';
 import axios from 'axios';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { XCircleIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 // components
 import UpdateTodo from './UpdateTodo';
@@ -98,23 +102,41 @@ function TodoItem({
               user={user}
               completed={completed}
               token={token}
+              text={text}
               rerenderTodos={rerenderTodos}
               setShowUpdateTodo={setShowUpdateTodo}
             />
           </>
         )}
-        <h2>{text}</h2>
-        <p>{completed.toString()}</p>
-        <p>{_id}</p>
-        <p>{user}</p>
-        {!completed && (
-          <>
-            <button onClick={completeTodo}>Färdigställ</button>
-            <button onClick={updateTodo}>Ändra</button>
-          </>
+        {!showUpdateTodo && (
+          <div className={styles.todo_item_content}>
+            <p>{text}</p>
+            <div className={styles.todo_icons}>
+              {!completed && (
+                <>
+                  <CheckCircleIcon
+                    onClick={completeTodo}
+                    className={styles.icon}
+                  />
+                  <PencilSquareIcon
+                    onClick={updateTodo}
+                    className={styles.icon}
+                  />
+                </>
+              )}
+              {completed && (
+                <ArrowPathIcon
+                  onClick={resetTodoToActive}
+                  className={styles.icon}
+                />
+              )}
+              <XCircleIcon
+                onClick={removeTodoFromServer}
+                className={styles.icon}
+              />
+            </div>
+          </div>
         )}
-        {completed && <button onClick={resetTodoToActive}>Återställ</button>}
-        <button onClick={removeTodoFromServer}>Radera</button>
       </div>
     </>
   );

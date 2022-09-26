@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/AuthContext';
+import styles from '../../styles/pages/App.module.scss';
 
 // components
 import { Todos } from '../../components/todos';
@@ -14,6 +15,7 @@ function App() {
 
   const [userId, setUserId] = React.useState('');
   const [userToken, setUserToken] = React.useState('');
+  const [username, setUsername] = React.useState('');
 
   React.useEffect(() => {
     // checks if the user is authenticated
@@ -27,13 +29,14 @@ function App() {
       const decodedToken = getTokenInfo(token);
 
       setUserId(decodedToken.user.id);
+      setUsername(decodedToken.user.username);
       setUserToken(token);
     }
   }, [router, getToken, isUserAuthenticated]);
 
   return (
-    <div>
-      <h1>Homepage för appen</h1>
+    <div className={styles.wrapper}>
+      <h1>Hej {username}!</h1>
       <Todos userId={userId} token={userToken} />
     </div>
   );
