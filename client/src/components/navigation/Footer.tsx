@@ -1,20 +1,27 @@
 import React from 'react';
-import Image from 'next/image';
+import Link from 'next/link';
+
 import styles from '../../styles/components/navigation/Footer.module.scss';
 
 function Footer() {
   return (
     <footer className={styles.footer}>
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by{' '}
-        <span className={styles.logo}>
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </span>
-      </a>
+      <div className={styles.footer_border}>
+        <div className={styles.footer_border_display}></div>
+      </div>
+      <div className={styles.footer_wrapper}>
+        <Link href="/">
+          <a className={styles.footer_logo}>Todo Next Nest App</a>
+        </Link>
+        <nav>
+          <Link href="/login">
+            <button className="btn-secondary">Logga in</button>
+          </Link>
+          <Link href="/signup">
+            <button className="btn-primary">Registrera</button>
+          </Link>
+        </nav>
+      </div>
     </footer>
   );
 }
