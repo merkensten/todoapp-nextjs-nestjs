@@ -21,24 +21,12 @@ export class UserService {
   async findByUsername(username: string): Promise<UserDocument | null> {
     return this.userModel.findOne({ username }).exec();
   }
+
   async findById(id: string): Promise<UserDetails | null> {
     const user = await this.userModel.findById(id).exec();
     if (!user) {
       return null;
     }
-    return this._getUserDetails(user);
-  }
-
-  async updatePassword(
-    id: string,
-    password: string,
-  ): Promise<UserDetails | null> {
-    const user = await this.userModel.findById(id).exec();
-    if (!user) {
-      return null;
-    }
-    user.password = password;
-    await user.save();
     return this._getUserDetails(user);
   }
 
