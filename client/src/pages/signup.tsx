@@ -47,16 +47,13 @@ function Signup() {
         console.log(response);
         setFormSucess(true);
         clearFormFields();
+        setTimeout(() => {
+          router.push('/login');
+        }, 2000);
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    setTimeout(() => {
-      if (formSucess) {
-        router.push('/login');
-      }
-    }, 2000);
   }
   return (
     <div className={styles.signup_wrapper}>
@@ -85,7 +82,7 @@ function Signup() {
           />
         </label>
         <button type="submit" className="btn-primary form-btn">
-          Sign up
+          {formSucess ? 'Registrering lyckades' : 'Registrera'}
         </button>
 
         {formError && (

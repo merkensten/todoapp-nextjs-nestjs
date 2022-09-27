@@ -11,7 +11,7 @@ function Login() {
     React.useContext(AuthContext);
 
   React.useEffect(() => {
-    // checks if the user is authenticated
+    // kollar om det finns en inloggad användare och isf redirectar till app sidan.
     if (isUserAuthenticated === true) {
       router.push('/app');
     }
@@ -52,21 +52,20 @@ function Login() {
           password,
         })
         .then(function (response) {
-          console.log(response.data);
           setFormSucess(true);
-          setToken(response.data.token);
-          setIsUserAuthenticated(true);
+
+          setTimeout(() => {
+            setToken(response.data.token);
+            setIsUserAuthenticated(true);
+            clearFormFields();
+            router.push('/app');
+          }, 1000);
         })
         .catch(function (error) {
           console.log(error);
           setFormError(true);
           setFormErrorMessage('Fel användarnamn eller lösenord');
         });
-
-      setTimeout(() => {
-        clearFormFields();
-        router.push('/app');
-      }, 2000);
     }
   }
   return (
@@ -96,7 +95,7 @@ function Login() {
           />
         </label>
         <button className="btn-primary form-btn" type="submit">
-          Logga in
+          {formSucess ? 'Laddar...' : 'Logga in'}
         </button>
         {formError && (
           <div>
