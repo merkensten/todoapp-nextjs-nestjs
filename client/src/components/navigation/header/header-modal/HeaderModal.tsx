@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import styles from '../../../../styles/components/navigation/HeaderModal.module.scss';
 import { AuthContext } from '../../../../context/AuthContext';
+import { useLockScroll } from '../../../../hooks';
 
 type NavbarItem = {
   name: string;
@@ -21,6 +22,13 @@ type Props = {
 function HeaderModal({ onCloseModal, navbarItems }: Props) {
   const router = useRouter();
   const { logoutUser } = React.useContext(AuthContext);
+  const { unlockScroll } = useLockScroll();
+
+  function onLogout() {
+    logoutUser();
+    unlockScroll();
+    router.push('/');
+  }
   return (
     <div
       className={`${styles.header_modal_container}`}
@@ -43,7 +51,7 @@ function HeaderModal({ onCloseModal, navbarItems }: Props) {
                   key={item.link}
                   navItem={item}
                   onCloseModal={onCloseModal}
-                  logout={logoutUser}
+                  logout={onLogout}
                 />
               );
             })}

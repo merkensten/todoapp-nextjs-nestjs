@@ -61,6 +61,7 @@ function Signup() {
   return (
     <div className={styles.signup_wrapper}>
       <form onSubmit={formSubmit}>
+        <h2>Registrera konto</h2>
         <label>
           Användarnamn:
           <input
