@@ -5,10 +5,12 @@ import { XCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 import styles from '../../../../styles/components/navigation/HeaderModal.module.scss';
+import { AuthContext } from '../../../../context/AuthContext';
 
 type NavbarItem = {
   name: string;
   link: string;
+  type: string;
 };
 
 type Props = {
@@ -18,6 +20,7 @@ type Props = {
 
 function HeaderModal({ onCloseModal, navbarItems }: Props) {
   const router = useRouter();
+  const { logoutUser } = React.useContext(AuthContext);
   return (
     <div
       className={`${styles.header_modal_container}`}
@@ -40,6 +43,7 @@ function HeaderModal({ onCloseModal, navbarItems }: Props) {
                   key={item.link}
                   navItem={item}
                   onCloseModal={onCloseModal}
+                  logout={logoutUser}
                 />
               );
             })}

@@ -28,10 +28,12 @@ function GuestHeader() {
     {
       name: 'Logga in',
       link: '/login',
+      type: 'link',
     },
     {
       name: 'Registrera',
       link: '/signup',
+      type: 'link',
     },
   ];
   return (
@@ -70,6 +72,19 @@ function AppHeader() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { lockScroll, unlockScroll } = useLockScroll();
 
+  const HeaderItems = [
+    {
+      name: 'Mitt konto',
+      link: '/app/konto',
+      type: 'link',
+    },
+    {
+      name: 'Logga ut',
+      link: '/logga-ut',
+      type: 'btn',
+    },
+  ];
+
   function logoutUserFunc() {
     logoutUser();
     router.push('/login');
@@ -87,17 +102,30 @@ function AppHeader() {
 
   return (
     <header className={styles.header}>
-      <Link href="/app">
-        <a className={styles.header_logo}>Todo Next.js Nest Js App</a>
-      </Link>
-      <nav>
-        <Link href="/app/konto">
-          <button className="btn-secondary">Mitt konto</button>
-        </Link>
-        <button className="btn-primary" onClick={logoutUserFunc}>
-          Logga ut
-        </button>
-      </nav>
+      {!isOpen && (
+        <>
+          <Link href="/">
+            <a className={styles.header_logo}>Todo App</a>
+          </Link>
+          <div className={styles.mobileMenu}>
+            <Bars2Icon onClick={handleOpenModal} className={styles.menuIcon} />
+          </div>
+          <nav className={styles.desktopMenu}>
+            <Link href="/app/konto">
+              <button className="btn-secondary">Mitt konto</button>
+            </Link>
+            <button className="btn-primary" onClick={logoutUserFunc}>
+              Logga ut
+            </button>
+          </nav>
+        </>
+      )}
+      {isOpen && (
+        <HeaderModal
+          onCloseModal={handleCloseModal}
+          navbarItems={HeaderItems}
+        />
+      )}
     </header>
   );
 }
