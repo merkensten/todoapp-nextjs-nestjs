@@ -4,6 +4,21 @@
   padding: 0 2rem;
   padding-bottom: 15rem;
 
+  nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+
+    button {
+      margin: 0;
+      max-width: 60%;
+    }
+
+    button + button {
+      margin-top: 2rem;
+    }
+  }
+
   .footer_border {
     padding-bottom: 4rem;
     max-width: 1200px;
@@ -35,6 +50,16 @@
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
+
+      nav {
+        flex-direction: row;
+        margin-top: 0;
+
+        button + button {
+          margin-top: 0;
+          margin-left: 2rem;
+        }
+      }
     }
   }
 }
