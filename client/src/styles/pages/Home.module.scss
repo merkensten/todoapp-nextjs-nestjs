@@ -2,7 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
   padding: 0 2rem;
   padding-bottom: 10rem;
@@ -11,5 +11,9 @@
     h1 {
       font-size: 5rem;
     }
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
   }
 }
